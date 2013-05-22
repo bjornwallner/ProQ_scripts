@@ -1,4 +1,4 @@
-#!/usr/bin/perl -w
+#!/usr/bin/perl
 ###########################################################
 #
 #SSpro and ACCpro: Protein Secondary Structure/Solvent Accessibility Prediction Programs
@@ -52,41 +52,41 @@ $big_db_dir = "${install_dir}data/big/";
 #set the big database name
 $big_db = "big_98_X";
 
-if (! -d $nr_db_dir)
-{
-	die "can't find nr database directory.\n";
-}
-if ( substr($nr_db_dir, length($nr_db_dir) - 1, 1) ne "/" )
-{
-	$nr_db_dir .= "/"; 
-}
-if (! -d $big_db_dir)
-{
-	die "can't find big directory.\n";
-}
-if ( substr($big_db_dir, length($big_db_dir) - 1, 1) ne "/" )
-{
-	$big_db_dir .= "/"; 
-}
+#if (! -d $nr_db_dir)
+#{
+#	die "can't find nr database directory.\n";
+#}
+#if ( substr($nr_db_dir, length($nr_db_dir) - 1, 1) ne "/" )
+#{
+#	$nr_db_dir .= "/"; 
+#}
+#if (! -d $big_db_dir)
+#{
+#	die "can't find big directory.\n";
+#}
+#if ( substr($big_db_dir, length($big_db_dir) - 1, 1) ne "/" )
+#{
+#	$big_db_dir .= "/"; 
+#}
 
 #check if the database are there. 
 $nr_db_f = $nr_db_dir . $nr_db; 
 $big_db_f = $big_db_dir . $big_db; 
 
-if (! -f "${big_db_f}.pal") {
-if (! -f "${big_db_f}.phr" || ! -f "${big_db_f}.pin" || ! -f "${big_db_f}.psq")
-{
-	die "can't find the big coil database.\n"; 	
-} 
-}
-
-if (! -f "${nr_db_f}.pal") {
-if (! -f "${nr_db_f}.phr" || ! -f "${nr_db_f}.pin" || ! -f "${nr_db_f}.psq" || ! -f "${nr_db_f}.pnd"
-    || ! -f "${nr_db_f}.pni" || ! -f "${nr_db_f}.psd" || ! -f "${nr_db_f}.psi" )
-{
-	die "can't find the non-redundant database.\n"; 	
-} 
-}
+#if (! -f "${big_db_f}.pal") {
+#if (! -f "${big_db_f}.phr" || ! -f "${big_db_f}.pin" || ! -f "${big_db_f}.psq")
+#{
+#	die "can't find the big coil database.\n"; 	
+#} 
+#}
+#
+#if (! -f "${nr_db_f}.pal") {
+#if (! -f "${nr_db_f}.phr" || ! -f "${nr_db_f}.pin" || ! -f "${nr_db_f}.psq" || ! -f "${nr_db_f}.pnd"
+#    || ! -f "${nr_db_f}.pni" || ! -f "${nr_db_f}.psd" || ! -f "${nr_db_f}.psi" )
+#{
+#	die "can't find the non-redundant database.\n"; 	
+#} 
+#}
  
 #check if the installation directory is right
 #the configuration file must run in the installation directory
