@@ -1,0 +1,46 @@
+Generate alignment...
+[blastpgp] WARNING: posReadCheckpoint: Attempting to recover data from previous checkpoint
+
+[blastpgp] WARNING: posReadCheckpoint: Data recovered successfully
+
+[blastpgp] ERROR: ncbiapi [000.000]  ObjMgrChoice: pointer [0] type [1] not found
+[blastpgp] ERROR: ncbiapi [000.000]  ObjMgrChoice: pointer [0] type [1] not found
+[blastpgp] ERROR: ncbiapi [000.000]  ObjMgrChoice: pointer [0] type [1] not found
+[blastpgp] ERROR: ncbiapi [000.000]  ObjMgrChoice: pointer [0] type [1] not found
+[blastpgp] ERROR: ncbiapi [000.000]  ObjMgrChoice: pointer [0] type [1] not found
+[blastpgp] ERROR: ncbiapi [000.000]  ObjMgrChoice: pointer [0] type [1] not found
+[blastpgp] ERROR: ncbiapi [000.000]  ObjMgrChoice: pointer [0] type [1] not found
+[blastpgp] ERROR: ncbiapi [000.000]  ObjMgrChoice: pointer [0] type [1] not found
+[blastpgp] ERROR: ncbiapi [000.000]  ObjMgrChoice: pointer [0] type [1] not found
+[blastpgp] ERROR: ncbiapi [000.000]  ObjMgrChoice: pointer [0] type [1] not found
+[blastpgp] ERROR: ncbiapi [000.000]  ObjMgrChoice: pointer [0] type [1] not found
+[blastpgp] ERROR: ncbiapi [000.000]  ObjMgrChoice: pointer [0] type [1] not found
+[blastpgp] ERROR: ncbiapi [000.000]  ObjMgrChoice: pointer [0] type [1] not found
+[blastpgp] ERROR: ncbiapi [000.000]  ObjMgrChoice: pointer [0] type [1] not found
+[blastpgp] ERROR: ncbiapi [000.000]  ObjMgrChoice: pointer [0] type [1] not found
+[blastpgp] ERROR: ncbiapi [000.000]  ObjMgrChoice: pointer [0] type [1] not found
+[blastpgp] ERROR: ncbiapi [000.000]  ObjMgrChoice: pointer [0] type [1] not found
+[blastpgp] ERROR: ncbiapi [000.000]  ObjMgrChoice: pointer [0] type [1] not found
+[blastpgp] ERROR: ncbiapi [000.000]  ObjMgrChoice: pointer [0] type [1] not found
+[blastpgp] ERROR: ncbiapi [000.000]  ObjMgrChoice: pointer [0] type [1] not found
+[blastpgp] ERROR: ncbiapi [000.000]  ObjMgrChoice: pointer [0] type [1] not found
+[blastpgp] ERROR: ncbiapi [000.000]  ObjMgrChoice: pointer [0] type [1] not found
+[blastpgp] ERROR: ncbiapi [000.000]  ObjMgrChoice: pointer [0] type [1] not found
+[blastpgp] ERROR: ncbiapi [000.000]  ObjMgrChoice: pointer [0] type [1] not found
+[blastpgp] ERROR: ncbiapi [000.000]  ObjMgrChoice: pointer [0] type [1] not found
+rm: cannot remove `./T0569_seqalg.app': Permission denied
+rm: cannot remove `tmp/T0569.seq.tmp': Permission denied
+rm: cannot remove `tmp/T0569.seq.chk': Permission denied
+rm: cannot remove `tmp/T0569.seq.blastpgp': Permission denied
+done
+Predict solvent accessibility...rm: cannot remove `./T0569_seq.tmp.homo3083.tmp': Permission denied
+rm: cannot remove `./T0569_seq.tmp.homo3083.accpro': Permission denied
+rm: cannot remove `./T0569_seq.tmp.homo3083': Permission denied
+rm: cannot remove `./T0569_seq.tmp.homo3083.out': Permission denied
+rm: cannot remove `./T0569_seq.tmp.homo3083foob.txt': Permission denied
+rm: cannot remove `./T0569_seq.tmp.homo3083fooi.bai': Permission denied
+rm: cannot remove `./T0569_seq.tmp.homo3083': Permission denied
+done
+rm: cannot remove `./T0569_seqalg': Permission denied
+rm: cannot remove `./T0569_seq.accpro': Permission denied
+rm: cannot remove `./T0569_seq.tmp': Permission denied

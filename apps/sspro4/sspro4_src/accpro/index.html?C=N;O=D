@@ -1,0 +1,37 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+ <head>
+  <title>Index of /~baldig/sspro4/sspro4_src/accpro</title>
+ </head>
+ <body>
+<h1>Index of /~baldig/sspro4/sspro4_src/accpro</h1>
+<table><tr><th><img src="/icons/blank.gif" alt="[ICO]"></th><th><a href="?C=N;O=A">Name</a></th><th><a href="?C=M;O=A">Last modified</a></th><th><a href="?C=S;O=A">Size</a></th><th><a href="?C=D;O=A">Description</a></th></tr><tr><th colspan="5"><hr></th></tr>
+<tr><td valign="top"><img src="/icons/back.gif" alt="[DIR]"></td><td><a href="/~baldig/sspro4/sspro4_src/">Parent Directory</a></td><td>&nbsp;</td><td align="right">  - </td></tr>
+<tr><td valign="top"><img src="/icons/unknown.gif" alt="[   ]"></td><td><a href="predict_seq_sa">predict_seq_sa</a></td><td align="right">05-Jul-2006 10:24  </td><td align="right"> 82K</td></tr>
+<tr><td valign="top"><img src="/icons/unknown.gif" alt="[   ]"></td><td><a href="makefile">makefile</a></td><td align="right">05-Jul-2006 10:24  </td><td align="right">737 </td></tr>
+<tr><td valign="top"><img src="/icons/text.gif" alt="[TXT]"></td><td><a href="Sequence.h">Sequence.h</a></td><td align="right">05-Jul-2006 10:24  </td><td align="right"> 31K</td></tr>
+<tr><td valign="top"><img src="/icons/unknown.gif" alt="[   ]"></td><td><a href="PredictSeq.o">PredictSeq.o</a></td><td align="right">05-Jul-2006 10:24  </td><td align="right"> 30K</td></tr>
+<tr><td valign="top"><img src="/icons/text.gif" alt="[TXT]"></td><td><a href="PredictSeq.cxx">PredictSeq.cxx</a></td><td align="right">05-Jul-2006 10:24  </td><td align="right">2.0K</td></tr>
+<tr><td valign="top"><img src="/icons/unknown.gif" alt="[   ]"></td><td><a href="NNt.o">NNt.o</a></td><td align="right">05-Jul-2006 10:24  </td><td align="right">7.1K</td></tr>
+<tr><td valign="top"><img src="/icons/text.gif" alt="[TXT]"></td><td><a href="NNt.h">NNt.h</a></td><td align="right">05-Jul-2006 10:24  </td><td align="right">2.4K</td></tr>
+<tr><td valign="top"><img src="/icons/text.gif" alt="[TXT]"></td><td><a href="NNt.cxx">NNt.cxx</a></td><td align="right">05-Jul-2006 10:24  </td><td align="right">1.7K</td></tr>
+<tr><td valign="top"><img src="/icons/unknown.gif" alt="[   ]"></td><td><a href="NN.o">NN.o</a></td><td align="right">05-Jul-2006 10:24  </td><td align="right">7.2K</td></tr>
+<tr><td valign="top"><img src="/icons/text.gif" alt="[TXT]"></td><td><a href="NN.h">NN.h</a></td><td align="right">05-Jul-2006 10:24  </td><td align="right">2.5K</td></tr>
+<tr><td valign="top"><img src="/icons/text.gif" alt="[TXT]"></td><td><a href="NN.cxx">NN.cxx</a></td><td align="right">05-Jul-2006 10:24  </td><td align="right">1.7K</td></tr>
+<tr><td valign="top"><img src="/icons/unknown.gif" alt="[   ]"></td><td><a href="Model.o">Model.o</a></td><td align="right">05-Jul-2006 10:24  </td><td align="right"> 24K</td></tr>
+<tr><td valign="top"><img src="/icons/text.gif" alt="[TXT]"></td><td><a href="Model.h">Model.h</a></td><td align="right">05-Jul-2006 10:24  </td><td align="right">2.2K</td></tr>
+<tr><td valign="top"><img src="/icons/text.gif" alt="[TXT]"></td><td><a href="Model.cxx">Model.cxx</a></td><td align="right">05-Jul-2006 10:24  </td><td align="right">6.6K</td></tr>
+<tr><td valign="top"><img src="/icons/unknown.gif" alt="[   ]"></td><td><a href="Layer.o">Layer.o</a></td><td align="right">05-Jul-2006 10:24  </td><td align="right"> 20K</td></tr>
+<tr><td valign="top"><img src="/icons/text.gif" alt="[TXT]"></td><td><a href="Layer.h">Layer.h</a></td><td align="right">05-Jul-2006 10:24  </td><td align="right">4.1K</td></tr>
+<tr><td valign="top"><img src="/icons/text.gif" alt="[TXT]"></td><td><a href="Layer.cxx">Layer.cxx</a></td><td align="right">05-Jul-2006 10:24  </td><td align="right">6.0K</td></tr>
+<tr><td valign="top"><img src="/icons/unknown.gif" alt="[   ]"></td><td><a href="General.o">General.o</a></td><td align="right">05-Jul-2006 10:24  </td><td align="right">3.1K</td></tr>
+<tr><td valign="top"><img src="/icons/text.gif" alt="[TXT]"></td><td><a href="General.h">General.h</a></td><td align="right">05-Jul-2006 10:24  </td><td align="right">2.1K</td></tr>
+<tr><td valign="top"><img src="/icons/text.gif" alt="[TXT]"></td><td><a href="General.cxx">General.cxx</a></td><td align="right">05-Jul-2006 10:24  </td><td align="right">1.9K</td></tr>
+<tr><td valign="top"><img src="/icons/unknown.gif" alt="[   ]"></td><td><a href="Ensemble.o">Ensemble.o</a></td><td align="right">05-Jul-2006 10:24  </td><td align="right"> 11K</td></tr>
+<tr><td valign="top"><img src="/icons/text.gif" alt="[TXT]"></td><td><a href="Ensemble.h">Ensemble.h</a></td><td align="right">05-Jul-2006 10:24  </td><td align="right">667 </td></tr>
+<tr><td valign="top"><img src="/icons/text.gif" alt="[TXT]"></td><td><a href="Ensemble.cxx">Ensemble.cxx</a></td><td align="right">05-Jul-2006 10:24  </td><td align="right">4.7K</td></tr>
+<tr><td valign="top"><img src="/icons/text.gif" alt="[TXT]"></td><td><a href="Cpp.h">Cpp.h</a></td><td align="right">05-Jul-2006 10:24  </td><td align="right">1.7K</td></tr>
+<tr><th colspan="5"><hr></th></tr>
+</table>
+<address>Apache/2.2.3 (CentOS) Server at www.ics.uci.edu Port 80</address>
+</body></html>

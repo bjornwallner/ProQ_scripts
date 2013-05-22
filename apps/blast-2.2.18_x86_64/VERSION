@@ -1,0 +1,4 @@
+The executable files were built on Sun Mar  2 10:25:56 EST 2008
+The version number of each individual application
+may be found in the appropriate documentation files in ./ncbi/doc/
+uname -a ouput is: Linux coremake2 2.6.5-7.257-smp #1 SMP Mon May 15 14:14:14 UTC 2006 x86_64 x86_64 x86_64 GNU/Linux

@@ -1,0 +1,126 @@
+BLASTP 2.2.8 [Jan-05-2004]
+
+
+Reference: Altschul, Stephen F., Thomas L. Madden, Alejandro A. Schaffer, 
+Jinghui Zhang, Zheng Zhang, Webb Miller, and David J. Lipman (1997), 
+"Gapped BLAST and PSI-BLAST: a new generation of protein database search
+programs",  Nucleic Acids Res. 25:3389-3402.
+
+Query= T0569
+         (79 letters)
+
+Database: nr 
+           6,456,136 sequences; 2,203,326,765 total letters
+
+Searching..................................................done
+
+
+
+                                                                 Score    E
+Sequences producing significant alignments:                      (bits) Value
+
+Unknown                                                               133   3e-30
+
+
+ Score =  133 bits (335), Expect = 3e-30
+ Identities = 0/79 (0%), Positives = 0/79 (0%)
+
+Query: 1    MDEDATITYVDDDKGGAQVGDIVTVTGKTDDSTTYTVTIPDGYEYVGTDGGVVSSDGKTV 60
+
+Query: 61   TITFAADDSDNVVIHLKHG 79
+
+
+
+ Score =  130 bits (326), Expect = 3e-29
+ Identities = 0/78 (0%), Positives = 0/78 (0%)
+
+Query: 2    DEDATITYVDDDKGGAQVGDIVTVTGKTDDSTTYTVTIPDGYEYVGTDGGVVSSDGKTVT 61
+
+Query: 62   ITFAADDSDNVVIHLKHG 79
+
+
+
+ Score =  130 bits (326), Expect = 3e-29
+ Identities = 0/78 (0%), Positives = 0/78 (0%)
+
+Query: 2    DEDATITYVDDDKGGAQVGDIVTVTGKTDDSTTYTVTIPDGYEYVGTDGGVVSSDGKTVT 61
+
+Query: 62   ITFAADDSDNVVIHLKHG 79
+
+
+
+ Score =  125 bits (314), Expect = 6e-28
+ Identities = 0/78 (0%), Positives = 0/78 (0%)
+
+Query: 2    DEDATITYVDDDKGGAQVGDIVTVTGKTDDSTTYTVTIPDGYEYVGTDGGVVSSDGKTVT 61
+
+Query: 62   ITFAADDSDNVVIHLKHG 79
+
+
+
+ Score = 93.2 bits (230), Expect = 4e-18
+ Identities = 0/75 (0%), Positives = 0/75 (0%), Gaps = 1/75 (1%)
+
+Query: 5   ATITYVDDDKGGAQVGDIVTVTGKTDDSTTYTVTIPDGYEYVGTDG-GVVSSDGKTVTIT 63
+
+Query: 64  FAADDSDNVVIHLKH 78
+
+
+
+ Score = 69.3 bits (168), Expect = 5e-11
+ Identities = 0/75 (0%), Positives = 0/75 (0%), Gaps = 2/75 (2%)
+
+Query: 5   ATITYVDDDKGGAQVGDIVTVTGKTDDSTTYTVTIPDGYEYVGTDGGV-VSSDGKTVTIT 63
+
+Query: 64  FAADDSDNVVIHLKH 78
+
+
+  Database: nr
+    Posted date:  Apr 21, 2008 10:25 PM
+  Number of letters in database: 997,030,155
+  Number of sequences in database:  2,969,609
+  
+  Database: /afs/pdc.kth.se/home/b/bjornw/CASP9/apps/sspro4/data/nr/nr
+  .01
+    Posted date:  Apr 21, 2008 10:29 PM
+  Number of letters in database: 997,186,233
+  Number of sequences in database:  2,813,519
+  
+  Database: /afs/pdc.kth.se/home/b/bjornw/CASP9/apps/sspro4/data/nr/nr
+  .02
+    Posted date:  Apr 21, 2008 10:31 PM
+  Number of letters in database: 209,110,377
+  Number of sequences in database:  673,008
+  
+Lambda     K      H
+   0.310    0.133    0.374 
+
+Lambda     K      H
+   0.267   0.0408    0.140 
+
+
+Matrix: BLOSUM62
+Gap Penalties: Existence: 11, Extension: 1
+Number of Hits to DB: 341,663,576
+Number of Sequences: 6456136
+Number of extensions: 12860489
+Number of successful extensions: 36464
+Number of sequences better than 1.0e-03: 1
+Number of HSP's better than  0.0 without gapping: 1
+Number of HSP's successfully gapped in prelim test: 0
+Number of HSP's that attempted gapping in prelim test: 36450
+Number of HSP's gapped (non-prelim): 11
+length of query: 79
+length of database: 2,203,326,765
+effective HSP length: 55
+effective length of query: 24
+effective length of database: 1,848,239,285
+effective search space: 44357742840
+effective search space used: 44357742840
+T: 11
+A: 40
+X1: 16 ( 7.1 bits)
+X2: 38 (14.6 bits)
+X3: 64 (24.7 bits)
+S1: 42 (21.7 bits)
+S2: 106 (45.4 bits)

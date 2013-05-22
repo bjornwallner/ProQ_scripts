@@ -1,0 +1,53 @@
+#!/bin/tcsh
+
+# This is a simple script which will carry out all of the basic steps
+# required to make a PSIPRED V2 prediction. Note that it assumes that the
+# following programs are in the appropriate directories:
+# blastpgp - PSIBLAST executable (from NCBI toolkit)
+# makemat - IMPALA utility (from NCBI toolkit)
+# psipred - PSIPRED V2 program
+# psipass2 - PSIPRED V2 program
+
+# The name of the BLAST data bank
+set dbname = nrfilt
+
+# Where the NCBI programs have been installed
+set ncbidir = /usr/local/bin
+
+# Where the PSIPRED V2 programs have been installed
+set execdir = ./bin
+
+# Where the PSIPRED V2 data files have been installed
+set datadir = ./data
+
+set basename = $1:r
+set rootname = $basename:t
+set outname = $basename.chk
+
+\cp -f $1 psitmp.fasta
+
+echo "Running PSI-BLAST with sequence" $1 "..."
+
+$ncbidir/blastpgp -v 5000 -b 0 -j 3 -h 0.001 -d $dbname -i psitmp.fasta -C psitmp.chk >& $rootname.blast
+
+echo "Predicting secondary structure..."
+
+echo psitmp.chk > psitmp.pn
+echo psitmp.fasta > psitmp.sn
+$ncbidir/makemat -P psitmp
+
+echo Pass1 ...
+
+$execdir/psipred psitmp.mtx $datadir/weights.dat $datadir/weights.dat2 $datadir/weights.dat3 $datadir/weights.dat4 > $rootname.ss
+
+echo Pass2 ...
+
+$execdir/psipass2 $datadir/weights_p2.dat 1 1.0 1.0 $rootname.ss2 $rootname.ss > $rootname.horiz
+
+# Remove temporary files
+
+echo Cleaning up ...
+\rm -f psitmp.* error.log
+
+echo "Final output files:" $rootname.ss2 $rootname.horiz
+echo "Finished."

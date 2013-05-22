@@ -1,0 +1,69 @@
+BLASTP 2.2.8 [Jan-05-2004]
+
+
+Reference: Altschul, Stephen F., Thomas L. Madden, Alejandro A. Schaffer, 
+Jinghui Zhang, Zheng Zhang, Webb Miller, and David J. Lipman (1997), 
+"Gapped BLAST and PSI-BLAST: a new generation of protein database search
+programs",  Nucleic Acids Res. 25:3389-3402.
+
+Query= T0569_seqalg
+         (79 letters)
+
+Database: dataset 
+           22,064 sequences; 5,101,384 total letters
+
+Searching.............................................done
+
+                                                             Score    E
+Sequences producing significant alignments:                  (bits) Value  N
+
+1CI3M                                                              24   6.3    2 
+
+>1CI3M
+          Length = 249
+
+ Score = 23.9 bits (47), Expect(2) = 6.3
+ Identities = 10/28 (35%), Positives = 17/28 (60%)
+
+Query: 28  KTDDSTTYTVTIPDGYEYVGTDGGVVSS 55
+           +T+D TT    IP G E + ++G  V++
+Sbjct: 196 RTEDGTTIVDKIPAGPELIVSEGEEVAA 223
+
+
+
+ Score = 16.8 bits (31), Expect(2) = 6.3
+ Identities = 5/17 (29%), Positives = 8/17 (47%)
+
+Query: 17  AQVGDIVTVTGKTDDST 33
+           A    ++T   K DD +
+Sbjct: 174 ASAAGVITAIAKADDGS 190
+
+
+  Database: dataset
+    Posted date:  Mar 20, 2005  6:04 PM
+  Number of letters in database: 5,101,384
+  Number of sequences in database:  22,064
+  
+Lambda     K      H
+   0.310    0.133    0.374 
+
+
+Matrix: BLOSUM62
+Number of Hits to DB: 1,017,364
+Number of Sequences: 22064
+Number of extensions: 45718
+Number of successful extensions: 2845
+Number of sequences better than 10.0: 1
+length of query: 79
+length of database: 5,101,384
+effective HSP length: 45
+effective length of query: 34
+effective length of database: 4,108,504
+effective search space: 139689136
+effective search space used: 139689136
+T: 11
+A: 40
+X1: 16 ( 7.1 bits)
+X2: 33 (14.7 bits)
+S1: 42 (21.7 bits)
+S2: 47 (23.9 bits)
