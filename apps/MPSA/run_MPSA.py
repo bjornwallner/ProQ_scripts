@@ -48,12 +48,12 @@ key      = filename.replace('.fasta','')
 #print infile_AA
 #print filename + " " + key
 
-
-query2=temp_dir+filename.replace('.fasta','')
-#print query2
-zpred_file=infile_AA.replace(".fasta",".zpred")
-topo_file=infile_AA.replace(".fasta",".topcons.fa")
-#print zpred_file
+query2=re.sub('.fasta$','',temp_dir+filename)
+#zpred_file=infile_AA.replace('.fasta$',".zpred")
+#topo_file=infile_AA.replace('.fasta$',".topcons.fa")
+zpred_file=re.sub('.fasta$',".zpred",infile_AA)
+topo_file=re.sub('.fasta$',".topcons.fa",infile_AA)
+#print zpred_file + '\n' + topo_file + '\n'
 #sys.exit()
 
 

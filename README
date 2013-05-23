@@ -1,0 +1,48 @@
+PROQ SCRIPTS
+Contact: bjornw@ifm.liu.se
+
+ProQ_scripts contain the scripts and programs needed to generate the
+sequence specific input features to the ProQ and ProQM scoring
+functions in Rosetta.
+
+INSTALLATION
+To install the program you need to do the following steps (the order does not matter)
+1) Set the $DB variable in bin/run_all_external.pl to a dbformated sequence database e.g. uniref90.
+2) run ./configure.pl
+
+TEST
+To check that everythin is set up
+run ./run_test.sh
+This should create all the files needed with any error messages...:-) 
+
+
+RUNNING 
+Once set up the main program 'bin/run_all_external.pl' will run
+everything using either a fastafile or extracting the sequence from a
+pdb
+
+bash$ bin/run_all_external.pl
+Usage: run_all_external.pl -pdb [pdbfile] -fasta [fastafile] -membrane 1 (if membrane protein) -overwrite 1 (if overwrite)
+
+For water solulable proteins run:
+bin/run_all_external.pl -pdb <pdbfile>
+or
+bin/run_all_external.pl -fasta <fastafile>
+
+For membrane proteins run:
+bin/run_all_external.pl -pdb <pdbfile> -membrane 1
+or
+bin/run_all_external.pl -fasta <fastafile> -membrane 1
+
+To use the sequence specific files in rosetta you need to use
+-ProQ:basename <basename>, where <basename> is the location of either
+the input pdbfile or input fastafile used to generate the sequence
+specific features. All features have the following naming: basename.*,
+e.g. basename.ss2 for secondary structure prediction or basename.mtx
+for psiblast profile etc.
+
+Currently there are no functionality to account for models that are
+missing residues. These have to be handled outside by for instance
+creating the features for the full length sequence and pick out the
+features for the residues that do exist.
+

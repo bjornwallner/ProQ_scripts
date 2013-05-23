@@ -7,4 +7,4 @@ then
 fi
 #format: 1:9-line, 2:3-line, all seq must have a title line(1 20 3).
 
-/home/bjornw/BAR99/ProQ_scripts/apps/sspro4/server/predict_seq_sa /home/bjornw/BAR99/ProQ_scripts/apps/sspro4/model/accpro.model $1 $2 $3 5
+/nfs/bjornw/Research/git/ProQ_scripts/apps/sspro4/server/predict_seq_sa /nfs/bjornw/Research/git/ProQ_scripts/apps/sspro4/model/accpro.model $1 $2 $3 5

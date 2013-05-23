@@ -6,12 +6,13 @@ use HTML::Parser;
 
 
 if(scalar(@ARGV) % 2 != 0) {
-    print STDERR "Usage: run_all_external.pl -pdb [pdbfile] -membrane 1 (if membrane protein) -overwrite 1 (if overwrite)\n";
+    print STDERR "Usage: run_all_external.pl -pdb [pdbfile] -fasta [fastafile] -membrane 1 (if membrane protein) -overwrite 1 (if overwrite)\n";
     exit;
 }
 %param=@ARGV;
-if(not(defined($param{-pdb}))) {
-    print STDERR "Usage: run_all_external.pl -pdb [pdbfile] -membrane 1 (if membrane protein) -overwrite 1 (if overwrite)\n";
+if(not(defined($param{-pdb})) &&
+   not(defined($param{-fasta}))) {
+    print STDERR "Usage: run_all_external.pl -pdb [pdbfile] -fasta [fastafile] -membrane 1 (if membrane protein) -overwrite 1 (if overwrite)\n";
     exit;
 }
 my $membrane=0;
@@ -23,16 +24,22 @@ if(defined($param{-membrane})) {
     $membrane=1;
 }
 
-$pdb_in=$param{-pdb};
+if(defined($param{-pdb}))
+{
+    $infile=$param{-pdb};
+} else {
+    $infile=$param{-fasta};
+}
+
 
 my $DB="/home/bjornw/Research/DB/uniref90.fasta";
 
 my $INSTALL_DIR=dirname(abs_path($0));
 $INSTALL_DIR.="/.."; 
 #my $DB=$INSTALL_DIR."/DB/uniref90.fasta";
-my $full_path=abs_path($pdb_in);
+my $full_path=abs_path($infile);
 my $path=dirname($full_path);
-my $pdb=basename($full_path);
+my $pdb=basename($full_path); #the name is $pdb but it could be a fasta file...
 chdir($path);
 print "run all for $pdb in $path...\n";
 
@@ -41,7 +48,14 @@ print "run all for $pdb in $path...\n";
  
 #fasta
 $fasta="$pdb.fasta";
-$seq=`$INSTALL_DIR/bin/aa321CA.pl $pdb`;
+if(defined($param{-pdb})) {
+    $seq=`$INSTALL_DIR/bin/aa321CA.pl $pdb`;
+} else {
+    $seq=`grep -v '>' $pdb`;
+    $seq=~s/\n//g;
+    $seq=~s/\s+//g;
+}
+
 chomp($seq);
 if($overwrite || !-e $fasta) {
     print "Creating fasta file..\n";
@@ -106,10 +120,22 @@ if($membrane)
 	print TOPCONS ">$topcons\n$topo2\n";
 	close(TOPCONS);
     }
+    $spanfile="$pdb.span";
+    if($overwrite || !-e $spanfile) {
+	my ($seq2,$topo2)=parse_topcons($topcons);
+	my $span=Mspan($topo2);
+	open(SPAN,">$spanfile");
+	print SPAN "Prediction from TOPCONS on $ARGV[0]\n";
+	print SPAN $span;
+	close(SPAN);
+	
+	
+    }
+
     my $zpred = "$INSTALL_DIR/apps/zpred/zpred.pl"; #/afs/pdc.kth.se/home/k/kriil/vol_03/Programs/zpred/bin/zpred.pl";
     $zpred_file="$pdb.zpred";
     $temp_dir="/tmp/";
-    if(!-e $zpred_file) {
+    if($overwrite || !-e $zpred_file) {
 	print "Zpred...\n";
 	print "$zpred -mode profile_topology -profile $profile_file  -topology $topcons_fa -prediction modhmm -out $zpred_file -tmpdir $temp_dir\n";
 	`$zpred -mode profile_topology -profile $profile_file  -topology $topcons_fa -prediction modhmm -out $zpred_file -tmpdir $temp_dir`;
@@ -124,17 +150,17 @@ if($membrane)
 	
     }
     if($overwrite || !-e $mprap_file) {
-	@temp=split(/\//,$fasta);
-	$outdir=join("/",@temp[0..$#temp-1]);
+#	@temp=split(/\//,$fasta);
+#	$outdir=join("/",@temp[0..$#temp-1]);
 #print $outdir."\n";
 	# print "scripts/run_MPSA.py $fasta $outdir/\n";
 #exit;
-	$outdir="." if(length($outdir)==0);
+#	$outdir="." if(length($outdir)==0);
 	print "MPRAP\n";
 #    print "/home/bjornw/afs/.vol/bjornw27/MPSA/run_MPSA.py $fasta $outdir\n";
 #	print "$INSTALL_DIR/bin/MPSA/run_MPSA.py $fasta $outdir\n";
-	print "$INSTALL_DIR/apps/MPSA/run_MPSA.py $fasta $outdir $DB\n";
-	`$INSTALL_DIR/apps/MPSA/run_MPSA.py $fasta $outdir $DB | egrep ' E|B ' > $mprap_file`;
+	print "$INSTALL_DIR/apps/MPSA/run_MPSA.py $fasta $path $DB\n";
+	`$INSTALL_DIR/apps/MPSA/run_MPSA.py $fasta $path $DB | egrep ' E|B ' > $mprap_file`;
 	
     
     }
@@ -212,3 +238,40 @@ sub parse_topcons
 }
 
 
+sub Mspan
+{
+    my $str=shift;
+    my $span="";
+    my @pred=split(//,$str);
+    my $start=1;
+    my $label=$pred[0];
+    my $i=1;
+    my $counter=0;
+    for(;$i<scalar @pred;$i++)
+    {
+	if($pred[$i-1] ne $pred[$i])
+	{
+	    my $end=$i;
+	#    print "$label $start $end\n";
+	   
+	    if($label eq "M")
+	    {
+		$span.=sprintf("%4d  %4d  %4d  %4d\n",$start,$end,$start,$end);
+		$counter++;
+	    }
+	     $start=$i+1;
+	    $label=$pred[$i];
+
+	}
+    }
+    $end=$i;
+#    print "$label $start $end\n";
+    if($label eq "M")
+    {
+	$span.=sprintf("%d %d %d %d\n",$start,$end,$start,$end);
+	$counter++;
+    }
+    my $len=length($str);
+    $span="$counter $len\nantiparallel\nn2c\n$span";
+    return $span;
+}
