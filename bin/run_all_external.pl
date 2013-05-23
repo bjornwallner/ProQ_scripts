@@ -65,7 +65,7 @@ if($overwrite || !-e $fasta) {
     close(OUT);
 }
 
-print $seq."\n";
+#print $seq."\n";
 $profile_file="$pdb.psi";
 #
 if($overwrite) {
