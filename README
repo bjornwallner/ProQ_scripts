@@ -1,17 +1,31 @@
 PROQ SCRIPTS
 Contact: bjornw@ifm.liu.se
+git: https://github.com/bjornwallner/ProQ_scripts.git
 
 ProQ_scripts contain the scripts and programs needed to generate the
 sequence specific input features to the ProQ and ProQM scoring
 functions in Rosetta.
 
+PATCH ROSETTA 3.5 to include ProQ and ProQM scoring functions
+1) Download rosetta 3.5, 
+   i.e rosetta3.5_source.tar and rosetta3.5_database.tar
+2) mkdir rosetta3.5
+3) cp rosetta3.5_source.tar and rosetta3.5_database.tar rosetta3.5/
+4) tar -xvf rosetta3.5_source.tar
+5) tar -xvf rosetta3.5_database.tar
+6) patch -p0 < ../ProQ_scripts/ProQ2_patch_rosetta3.5_with_test ,
+where ../ProQ_scripts/ProQ2_patch_rosetta3.5_with_test should be replaced with the actual location of the patch file.
+7) compile rosetta according to the instructions.
+
+
+
 INSTALLATION
-To install the program you need to do the following steps (the order does not matter)
+To install the programs you need to do the following steps (the order does not matter)
 1) Set the $DB variable in bin/run_all_external.pl to a dbformated sequence database e.g. uniref90.
 2) run ./configure.pl
 
 TEST
-To check that everythin is set up
+To check that everything is set up
 run ./run_test.sh
 This should create all the files needed with any error messages...:-) 
 
@@ -35,14 +49,31 @@ or
 bin/run_all_external.pl -fasta <fastafile> -membrane 1
 
 To use the sequence specific files in rosetta you need to use
--ProQ:basename <basename>, where <basename> is the location of either
+-ProQ:basename <basename>, where <basename> is either
 the input pdbfile or input fastafile used to generate the sequence
 specific features. All features have the following naming: basename.*,
 e.g. basename.ss2 for secondary structure prediction or basename.mtx
 for psiblast profile etc.
 
-Currently there are no functionality to account for models that are
+Currently there are no functionality to account for models that have
 missing residues. These have to be handled outside by for instance
 creating the features for the full length sequence and pick out the
 features for the residues that do exist.
+
+
+RUNNING ProQ or ProQM on 1abc.pdb
+
+1) Create the sequence specific features as described above. You do this once for a given sequence.
+   i.e. bin/run_all_external.pl -pdb 1abc.pdb, will create files with the basename 1abc.pdb
+   For membrane proteins
+   bin/run_all_external.pl -pdb 1abc.pdb -membrane 1
+
+2) to score all *.pdb run:
+   score.linuxgccrelease -database <rosetta database> -in:file:fullatom -ProQ:basename 1abc.pdb -in:file:s *.pdb -out:file:scorefile ProQ.sc -score:weights ProQ -out:file:scorefile
+For membrane protein:
+   score.linuxgccrelease -database <rosetta database> -in:file:fullatom -ProQ:basename 1abc.pdb -in:file:s *.pdb -out:file:scorefile ProQM.sc score:weights ProQM -ProQ:membrane 
+
+This will produce a scorefiles with with the a global score corresponding to summed local scores. To get the usual ProQ/ProQM score divide by length or run the scoring with -ProQ:normalize <target length> to get normalized scores directly.
+
+To get the local scores run the scoring with -ProQ:output_local_prediction, this will generate a local quality estimates with the name ProQM.<pdb>
 
