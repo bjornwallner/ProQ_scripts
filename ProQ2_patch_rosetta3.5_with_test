@@ -29094,7 +29094,7 @@ index b21b843..4cb1a30 100644
  	mutable UnfoldedStatePotentialOP unf_state_;
 diff --git a/rosetta_source/src/core/scoring/methods/ProQ_Energy.cc b/rosetta_source/src/core/scoring/methods/ProQ_Energy.cc
 new file mode 100644
-index 0000000..c742552
+index 0000000..90ad97e
 --- /dev/null
 +++ b/rosetta_source/src/core/scoring/methods/ProQ_Energy.cc
 @@ -0,0 +1,1682 @@
@@ -29665,11 +29665,12 @@ index 0000000..c742552
 +	stream.close();
 +	return nres;
 +}
++
 +void
 +ProQ_Energy::calculate_feature_vector_proq2(pose::Pose & pose,
 +		ObjexxFCL::FArray2D< Real > & feature_vector) const{
 +
-+	//std::cout << "Calculating Feature vector ProQ2" << std::endl;
++	TR.Debug << "Calculating Feature vector ProQ2" << std::endl;
 +	//const int nres=(int)pose.total_residue();
 +	const int nres=(int)nres_;
 +	//Calculate secondary structure
@@ -29800,11 +29801,10 @@ index 0000000..c742552
 +	}
 +*/
 +}
-+void 
-+ProQ_Energy::calculate_feature_vector(pose::Pose & pose,
-+		ObjexxFCL::FArray2D< Real > & feature_vector) const{
++void  
++ProQ_Energy::calculate_feature_vector(pose::Pose & pose, ObjexxFCL::FArray2D< Real > & feature_vector) const{
 +
-+	//std::cout << "Calculating Feature vector for ProQM" << std::endl;
++	TR.Debug << "Calculating Feature vector for ProQM" << std::endl;
 +	//const int nres=(int)pose.total_residue();
 +	const int nres=(int)nres_;
 +	//Calculate secondary structure
@@ -29814,7 +29814,7 @@ index 0000000..c742552
 +
 +	utility::vector1<Real> rsd_sasa_rel(nres,0.0);
 +	calc_per_atom_sasa_sc( pose, rsd_sasa_rel, true /*normalize*/ );
-+	bool use_naccess=false; //just to verify with original method, since the sasa routine is not exactly like naccess.
++	/*bool use_naccess=false; //just to verify with original method, since the sasa routine is not exactly like naccess.
 +	if(use_naccess) {
 +		utility::io::izstream stream;
 +		std::string line;
@@ -29838,7 +29838,7 @@ index 0000000..c742552
 +			                              //std::cout << line << std::endl << rsa_sasa_all[i] << " " << rsa_sasa_all[i] << " " << rsa_sasa[i] << std::endl;
 +		}
 +
-+	}
++		}*/
 +
 +	ObjexxFCL::FArray1D< Real > Z;
 +	calculateZ(pose,Z);
@@ -29877,7 +29877,6 @@ index 0000000..c742552
 +
 +	//SURF 24 4x6
 +	surf_feature(pose,rsd_sasa_rel,feature_vector,113);
-+	return;
 +	for(Size i=1;i<=nres_;++i) {
 +
 +
@@ -29907,7 +29906,7 @@ index 0000000..c742552
 +		// terminiN 1 + // terminiC 1
 +		termini_feature(pose,feature_vector,i,259);
 +	}
-+
++	//TR.Debug << "output_feature_vector " << basic::options::option[ basic::options::OptionKeys::ProQ::output_feature_vector ]() << std::endl;
 +	if(basic::options::option[ basic::options::OptionKeys::ProQ::output_feature_vector ]()) {
 +		using namespace core::pose::datacache;
 +		std::string tag( "empty_tag" );
@@ -29916,7 +29915,7 @@ index 0000000..c742552
 +					static_cast< basic::datacache::CacheableString const & >
 +			( pose.data().get( CacheableDataType::JOBDIST_OUTPUT_TAG ) ).str();
 +		}
-+		//std::cout << "SVM START " << tag << std::endl;
++		//TR.Debug << "SVM START " << tag << std::endl;
 +		for(Size i=1;i<=nres_;++i) {
 +			std::cout << "SVM " << tag << " ";
 +			for(Size j=1;j<=260;++j) {
@@ -29939,6 +29938,7 @@ index 0000000..c742552
 +		std::cout << "DIFF: " << i << " " << diff << std::endl;
 +	}
 +*/
++
 +}
 +
 +
