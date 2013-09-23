@@ -6,8 +6,12 @@ ProQ_scripts contain the scripts and programs needed to generate the
 sequence specific input features to the ProQ and ProQM scoring
 functions in Rosetta.
 
+If you already have a version of Rosetta 3.5 follow the instructions below, 
+otherwise use the download the lastest weekly release.
+
+Alt 1) 
 PATCH ROSETTA 3.5 to include ProQ and ProQM scoring functions
-1) Download rosetta 3.5, 
+1) Download rosetta 3.5, from https://www.rosettacommons.org/software/
    i.e rosetta3.5_source.tar and rosetta3.5_database.tar
 2) mkdir rosetta3.5
 3) cp rosetta3.5_source.tar and rosetta3.5_database.tar rosetta3.5/
@@ -17,6 +21,10 @@ PATCH ROSETTA 3.5 to include ProQ and ProQM scoring functions
 where ../ProQ_scripts/ProQ2_patch_rosetta3.5_with_test should be replaced with the actual location of the patch file.
 7) compile rosetta according to the instructions.
 
+Alt 2)
+1) Download the latest weekly release (after week 36, 2013)
+from https://www.rosettacommons.org/software/, you need a license but it's free for academia.
+2) compile rosetta according to the instructions.
 
 
 INSTALLATION
