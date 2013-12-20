@@ -4,6 +4,7 @@ use File::Basename;
 use LWP::UserAgent; 
 use HTML::Parser;
 
+my $DB="/home/bjornw/Research/DB/uniref90.fasta";
 
 if(scalar(@ARGV) % 2 != 0) {
     print STDERR "Usage: run_all_external.pl -pdb [pdbfile] -fasta [fastafile] -membrane 1 (if membrane protein) -overwrite 1 (if overwrite)\n";
@@ -32,7 +33,7 @@ if(defined($param{-pdb}))
 }
 
 
-my $DB="/home/bjornw/Research/DB/uniref90.fasta";
+
 
 my $INSTALL_DIR=dirname(abs_path($0));
 $INSTALL_DIR.="/.."; 
@@ -64,7 +65,7 @@ if($overwrite || !-e $fasta) {
     print OUT ">$pdb\n$seq\n";
     close(OUT);
 }
-
+#exit;
 #print $seq."\n";
 $profile_file="$pdb.psi";
 #
