@@ -6,10 +6,11 @@ ProQ_scripts contain the scripts and programs needed to generate the
 sequence specific input features to the ProQ and ProQM scoring
 functions in Rosetta.
 
-If you already have a version of Rosetta 3.5 follow the instructions below, 
-otherwise use the download the lastest weekly release.
+If you already have a version of Rosetta 3.5 follow the "A" instructions below, 
+otherwise follow the "B instructions " and the download the lastest weekly release
+of Rosetta.
 
-Alt 1) 
+A) 
 PATCH ROSETTA 3.5 to include ProQ and ProQM scoring functions
 1) Download rosetta 3.5, from https://www.rosettacommons.org/software/
    i.e rosetta3.5_source.tar and rosetta3.5_database.tar
@@ -21,7 +22,7 @@ PATCH ROSETTA 3.5 to include ProQ and ProQM scoring functions
 where ../ProQ_scripts/ProQ2_patch_rosetta3.5_with_test should be replaced with the actual location of the patch file.
 7) compile rosetta according to the instructions.
 
-Alt 2)
+B)
 1) Download the latest weekly release (after week 36, 2013)
 from https://www.rosettacommons.org/software/, you need a license but it's free for academia.
 2) compile rosetta according to the instructions.
@@ -29,17 +30,17 @@ from https://www.rosettacommons.org/software/, you need a license but it's free 
 
 INSTALLATION
 To install the programs you need to do the following steps (the order does not matter)
-1) Set the $DB variable in bin/run_all_external.pl to a dbformated sequence database e.g. uniref90.
+1) Set the $DB variable in bin/run_all_external.pl to a formated sequence database e.g. uniref90. (e.g. download the fasta sequences and run formatdb from the blast package)
 2) run ./configure.pl
 
 TEST
 To check that everything is set up
 run ./run_test.sh
-This should create all the files needed with any error messages...:-) 
+This should create all the files needed with any error messages.
 
 
 RUNNING 
-Once set up the main program 'bin/run_all_external.pl' will run
+Once set up, the main program 'bin/run_all_external.pl' will run
 everything using either a fastafile or extracting the sequence from a
 pdb
 
@@ -66,7 +67,8 @@ for psiblast profile etc.
 Currently there are no functionality to account for models that have
 missing residues. These have to be handled outside by for instance
 creating the features for the full length sequence and pick out the
-features for the residues that do exist.
+features for the residues that do exist. This functionality might be 
+added later.
 
 
 RUNNING ProQ or ProQM on 1abc.pdb
@@ -76,12 +78,21 @@ RUNNING ProQ or ProQM on 1abc.pdb
    For membrane proteins
    bin/run_all_external.pl -pdb 1abc.pdb -membrane 1
 
-2) to score all *.pdb run:
+2a) to score all *.pdb run:
    score.linuxgccrelease -database <rosetta database> -in:file:fullatom -ProQ:basename 1abc.pdb -in:file:s *.pdb -out:file:scorefile ProQ.sc -score:weights ProQ -out:file:scorefile
 For membrane protein:
-   score.linuxgccrelease -database <rosetta database> -in:file:fullatom -ProQ:basename 1abc.pdb -in:file:s *.pdb -out:file:scorefile ProQM.sc score:weights ProQM -ProQ:membrane 
+   score.linuxgccrelease -database <rosetta database> -in:file:fullatom -ProQ:basename 1abc.pdb -in:file:s *.pdb -out:file:scorefile ProQM.sc -score:weights ProQM -ProQ:membrane 
 
-This will produce a scorefiles with with the a global score corresponding to summed local scores. To get the usual ProQ/ProQM score divide by length or run the scoring with -ProQ:normalize <target length> to get normalized scores directly.
+This will produce a scorefile with with the a global score corresponding to summed local scores. To get the usual ProQ/ProQM score divide by length or run the scoring with -ProQ:normalize <target length> to get normalized scores directly.
 
 To get the local scores run the scoring with -ProQ:output_local_prediction, this will generate a local quality estimates with the name ProQM.<pdb>
 
+ 
+2b) Side-chain sampling before score (this is currently only benchmarked for ProQM)
+Generate 10 different side-chain conformations for each pdb:
+    relax.linuxgccrelease  -database <rosetta database> -in:file:fullatom -out:file:silent_struct_type binary -relax:membrane -membrane:Membed_init -score:weights membrane_highres.wts -in:file:spanfile $basename.span -nstruct 10 -relax_script <dir_ProQ_scripts>/resampling/repack.script -in:file:s *.pdb -out:file:silent ProQM.repacked.silent
+
+Score each of these with ProQM:
+    score.linuxgccrelease -database <rosetta database> -in:file:fullatom -ProQ:membrane -score:weights ProQM -in:file:silent ProQM.repacked.silent -out:file:scorefile ProQM.repacked.silent.score
+
+Select the model with the highest ProQM score.
