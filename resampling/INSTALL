@@ -1,0 +1,8 @@
+resampling.pl
+Contact: bjornw@ifm.liu.se
+
+INSTALLATION
+1) Setup ProQ_scripts according to the instructions in the README
+2) Update the paths to Rosetta in resampling.pl
+3) Done
+
