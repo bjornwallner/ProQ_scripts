@@ -14,6 +14,6 @@ print $repack_cmd."\n";
 print $score_cmd."\n";
 #system("$run_all_external_cmd");
 #system("$repack_cmd");
-system("$score_cmd");
+#system("$score_cmd");
 $selected=`grep ^SCORE ProQM.repacked.silent.score |sort -n -r -k 2|head|awk '{print \$7}'`;
 print "Selected model: $selected";
