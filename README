@@ -2,6 +2,8 @@ PROQ SCRIPTS
 Contact: bjornw@ifm.liu.se
 git: https://github.com/bjornwallner/ProQ_scripts.git
 
+* For ProQM-resample see 2c) at the end of this document.
+
 ProQ is Model Quality Assessment Program that predictis the quality of
 individual models. To do this ProQ uses both information that can be
 calculated from the 3D coordinates of the model as well as information
@@ -117,11 +119,12 @@ Score each of these with ProQM:
 
 Select the model with the highest ProQM score.
 
-2c) run resampling/resampling.pl
+2c) ProQM-resample
+Follow the instruction above to install ProQ_scripts
 
-The following command:
-    resampling/resampling.pl <any pdb in the folder>
+The command:
+    resampling/resampling.pl <any pdb in the folder (this is only used to get the sequence)>
 
-Will do 1+2b (calculate sequence specific features+resampling+scoring)
+will do 1+2b (calculate sequence specific features+resampling+scoring)
 on all *.pdb in the folder from where it is executed. All *.pdb needs
 to be for the same sequence.
