@@ -1,8 +1,29 @@
 #!/usr/bin/perl -w
 use Cwd 'abs_path';
 use File::Basename;
-use LWP::UserAgent; 
-use HTML::Parser;
+
+my $LWP_loaded=1;
+my $HTML_loaded=0;
+
+eval {
+    require LWP::UserAgent; 
+    LWP::UserAgent->import();
+    1;
+} or do {
+   my $error = $@;
+   $LWP_loaded=0
+
+};
+
+eval {
+    require HTML::Parser;
+    HTML::Parser->import();
+    1;
+} or do {
+   my $error = $@;
+   $HTML_loaded=0;
+};
+
 
 my $DB="/home/bjornw/Research/DB/uniref90.fasta";
 
@@ -32,7 +53,10 @@ if(defined($param{-pdb}))
     $infile=$param{-fasta};
 }
 
-
+if(defined($param{-db}))
+{
+    $DB=$param{-db};
+}
 
 
 my $INSTALL_DIR=dirname(abs_path($0));
@@ -82,26 +106,28 @@ if(!-e $profile_file) {
    # `/Users/bjornw/Research/bin/create_profile.sh $fasta`;
 
      print "$INSTALL_DIR/bin/create_profile.sh $fasta $DB\n";
-    system("$INSTALL_DIR/bin/create_profile.sh $fasta $DB");
+#    exit;
+    system("$INSTALL_DIR/bin/create_profile.sh $fasta $DB 8 3");
 }
 
 if($membrane)
 {
-    $topcons="$pdb.topcons";
-    $topcons_fa="$pdb.topcons.fa";
-    if($overwrite || !-e $topcons) {
-	print "topcons...\n";
-	my $ua = new LWP::UserAgent;
-	my $response = $ua -> post('http://topcons.net',{'sequence' => $seq,'do' => 'Submit',});
-	$content=$response->content();
-	if($content=~/result\/(.+)\/topcons.txt/) {
-	    $id=$1;
-	    print $id."\n";
-	    my $response = $ua -> post("http://topcons.net/result/$id/topcons.txt");
-	    open(OUT,">$topcons");
-	    print OUT $response->content();
-	    close(OUT);
-	#my $parser = new MyParser;
+    if($LWP_loaded && $HTML_loaded) {
+	$topcons="$pdb.topcons";
+	$topcons_fa="$pdb.topcons.fa";
+	if($overwrite || !-e $topcons) {
+	    print "topcons...\n";
+	    my $ua = new LWP::UserAgent;
+	    my $response = $ua -> post('http://topcons.net',{'sequence' => $seq,'do' => 'Submit',});
+	    $content=$response->content();
+	    if($content=~/result\/(.+)\/topcons.txt/) {
+		$id=$1;
+		print $id."\n";
+		my $response = $ua -> post("http://topcons.net/result/$id/topcons.txt");
+		open(OUT,">$topcons");
+		print OUT $response->content();
+		close(OUT);
+		#my $parser = new MyParser;
 #	my $parsed=$parser->parse($content);
 #	print $parsed."\n";
 #	$string="sequence=$seq\&do=Submit";
@@ -110,60 +136,63 @@ if($membrane)
 #	open(OUT,">$topcons");
 #	print OUT $output;
 #	close(OUT);
-	}
+	    }
 #`run_topcons.pl $fasta > $topcons`;
-    }
-    if($overwrite || !-e "$topcons.fa"){ 
-	print "Topcons to fasta...\n";
+	}
+	if($overwrite || !-e "$topcons.fa"){ 
+	    print "Topcons to fasta...\n";
 #	`$INSTALL_DIR/bin/parse_topcons.pl $topcons > $topcons.fa`;
-	my ($seq2,$topo2)=parse_topcons($topcons);
-	open(TOPCONS,">$topcons.fa");
-	print TOPCONS ">$topcons\n$topo2\n";
-	close(TOPCONS);
-    }
-    $spanfile="$pdb.span";
-    if($overwrite || !-e $spanfile) {
-	my ($seq2,$topo2)=parse_topcons($topcons);
-	my $span=Mspan($topo2);
-	open(SPAN,">$spanfile");
-	print SPAN "Prediction from TOPCONS on $ARGV[0]\n";
-	print SPAN $span;
-	close(SPAN);
-	
-	
-    }
+	    my ($seq2,$topo2)=parse_topcons($topcons);
+	    open(TOPCONS,">$topcons.fa");
+	    print TOPCONS ">$topcons\n$topo2\n";
+	    close(TOPCONS);
+	}
+	$spanfile="$pdb.span";
+	if($overwrite || !-e $spanfile) {
+	    my ($seq2,$topo2)=parse_topcons($topcons);
+	    my $span=Mspan($topo2);
+	    open(SPAN,">$spanfile");
+	    print SPAN "Prediction from TOPCONS on $ARGV[0]\n";
+	    print SPAN $span;
+	    close(SPAN);
+	    
+	    
+	}
 
-    my $zpred = "$INSTALL_DIR/apps/zpred/zpred.pl"; #/afs/pdc.kth.se/home/k/kriil/vol_03/Programs/zpred/bin/zpred.pl";
-    $zpred_file="$pdb.zpred";
-    $temp_dir="/tmp/";
-    if($overwrite || !-e $zpred_file) {
-	print "Zpred...\n";
-	print "$zpred -mode profile_topology -profile $profile_file  -topology $topcons_fa -prediction modhmm -out $zpred_file -tmpdir $temp_dir\n";
-	`$zpred -mode profile_topology -profile $profile_file  -topology $topcons_fa -prediction modhmm -out $zpred_file -tmpdir $temp_dir`;
+	my $zpred = "$INSTALL_DIR/apps/zpred/zpred.pl"; #/afs/pdc.kth.se/home/k/kriil/vol_03/Programs/zpred/bin/zpred.pl";
+	$zpred_file="$pdb.zpred";
+	$temp_dir="/tmp/";
+	if($overwrite || !-e $zpred_file) {
+	    print "Zpred...\n";
+	    print "$zpred -mode profile_topology -profile $profile_file  -topology $topcons_fa -prediction modhmm -out $zpred_file -tmpdir $temp_dir\n";
+	    `$zpred -mode profile_topology -profile $profile_file  -topology $topcons_fa -prediction modhmm -out $zpred_file -tmpdir $temp_dir`;
 #exit;
-    }
-    
-    $mprap_file="$pdb.mpSA";
-    if(-e $mprap_file) {
-	if(-s $mprap_file==0) {
-	    `rm $mprap_file`;
 	}
 	
-    }
-    if($overwrite || !-e $mprap_file) {
+	$mprap_file="$pdb.mpSA";
+	if(-e $mprap_file) {
+	    if(-s $mprap_file==0) {
+		`rm $mprap_file`;
+	    }
+	    
+	}
+	if($overwrite || !-e $mprap_file) {
 #	@temp=split(/\//,$fasta);
 #	$outdir=join("/",@temp[0..$#temp-1]);
 #print $outdir."\n";
-	# print "scripts/run_MPSA.py $fasta $outdir/\n";
+	    # print "scripts/run_MPSA.py $fasta $outdir/\n";
 #exit;
 #	$outdir="." if(length($outdir)==0);
-	print "MPRAP\n";
+	    print "MPRAP\n";
 #    print "/home/bjornw/afs/.vol/bjornw27/MPSA/run_MPSA.py $fasta $outdir\n";
 #	print "$INSTALL_DIR/bin/MPSA/run_MPSA.py $fasta $outdir\n";
-	print "$INSTALL_DIR/apps/MPSA/run_MPSA.py $fasta $path $DB\n";
-	`$INSTALL_DIR/apps/MPSA/run_MPSA.py $fasta $path $DB | egrep ' E|B ' > $mprap_file`;
-	
-    
+	    print "$INSTALL_DIR/apps/MPSA/run_MPSA.py $fasta $path $DB\n";
+	    `$INSTALL_DIR/apps/MPSA/run_MPSA.py $fasta $path $DB | egrep ' E|B ' > $mprap_file`;
+	    
+	    
+	}
+    } else {
+	print STDERR "Unable to load LWP::UserAgent or HTML::Parser, cannot run topcons server!\n";
     }
 } else {
     $accfile="$pdb.acc";

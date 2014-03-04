@@ -53,7 +53,7 @@ and run formatdb from the blast package)
 TEST
 To check that everything is set up
 run ./run_test.sh
-This should create all the files needed with any error messages.
+This should create all the files needed without any error messages.
 
 
 RUNNING 
@@ -96,7 +96,7 @@ RUNNING ProQ or ProQM on a pdb with the name 1abc.pdb
    bin/run_all_external.pl -pdb 1abc.pdb -membrane 1
 
 2a) to score all *.pdb run:
-   score.linuxgccrelease -database <rosetta database> -in:file:fullatom -ProQ:basename 1abc.pdb -in:file:s *.pdb -out:file:scorefile ProQ.sc -score:weights ProQ -out:file:scorefile
+   score.linuxgccrelease -database <rosetta database> -in:file:fullatom -ProQ:basename 1abc.pdb -in:file:s *.pdb -out:file:scorefile ProQ.sc -score:weights ProQ2 
 For membrane protein:
    score.linuxgccrelease -database <rosetta database> -in:file:fullatom -ProQ:basename 1abc.pdb -in:file:s *.pdb -out:file:scorefile ProQM.sc -score:weights ProQM -ProQ:membrane 
 
