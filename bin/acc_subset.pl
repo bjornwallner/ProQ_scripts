@@ -18,10 +18,10 @@ $ss_pred=`cat $ss2 |tail -n 1`;
 $ss_pred=~s/\n//;
 
 
-#print "$seqfile: $seq\n";
-#print "$seqfile_model: $profile_seq\n";
-#print $ss_pred."\n";
-#print "=====\n";
+print "$seqfile: $seq\n";
+print "$seqfile_acc: $profile_seq\n";
+print $ss_pred."\n";
+print "=====\n";
 #exit;
 chomp($profile_seq);
 chomp($ss_pred);
