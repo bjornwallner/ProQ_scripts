@@ -1,6 +1,6 @@
 #!/usr/bin/perl -w 
 #
-#
+# ddf
 #
 #use lib '/home/bjornw/Research/git/source/perl/';
 #use lib '/afs/pdc.kth.se/home/a/arnee/MODULES/perl5/lib/site_perl/5.6.0/i386-linux/';
@@ -20,6 +20,36 @@ use Bio::SimpleAlign;
 use Bio::LocatableSeq;
 use Bio::Seq;
 use File::Temp qw/ tempfile /;
+
+sub get_Bfactor
+{
+    my $input_pdb=shift;
+    my %b=();
+    open(IN,$input_pdb);
+    my $old_resnum="undef";
+    while(<IN>) {
+	chomp;
+        if(/^ATOM/)
+	{
+	    my $atomno=substr($_, 7, 4);
+ 	    my $atomtype=substr($_, 13, 3);
+	    my $resnum=substr($_,21,5);
+	    $resnum=~s/\s+//g;
+	    #print "$resnum $old_resnum $atomtype\n";
+	    if($atomtype=~/CA/ && $old_resnum ne $resnum)
+	    {
+		#        $res=substr($_,17, 3);
+		#       print $table{$res};
+		my $b=substr($_,60,6);
+		$b=~s/\s+//g;
+		$b{$resnum}=$b;
+#		push(@b,$b);
+		$old_resnum=$resnum;
+	    }
+	}
+    }
+    return(%b);
+}
 
 sub get_residues_with_CA
 {
@@ -104,7 +134,7 @@ sub align   # Takes two strings removes all dashes and returns the alignment.
     }
 
     #print "needle -aseq $file1 -bseq $file2 -gapopen 10 -gapextend 0.5 -outfile $file3\n";
-    `needle -aseq $file1 -bseq $file2 -gapopen 10 -gapextend 0.5 -outfile $file3 > /dev/null 2>&1`;
+    `needle -aseq $file1 -bseq $file2 -gapopen 1 -gapextend 0.5 -outfile $file3 > /dev/null 2>&1`;
     #print $file3."\n";
     ($ali_return1,$ali_return2)=parse_needle_output($file3);
     `rm $file1 $file2 $file3`;
@@ -2169,7 +2199,7 @@ sub aa321_resnum
 	    my $atomno=substr($_, 7, 4);
 	    my $atomtype=substr($_, 13, 3);
 	    my $resnum=substr($_,22,5);
-	    $resnum=~s/\s+//g;
+#	    $resnum=~s/\s+//g;
 	    #print "$resnum $old_resnum $atomtype\n";
 	    if($atomtype=~/CA/ && $old_resnum ne $resnum)
 	    {
@@ -2188,6 +2218,41 @@ sub aa321_resnum
     return ($seq,\@resnum);
 }
 
+sub parse_TMscore 
+{
+    my $file=shift;
+    my %data=();
+    open(TM,$file);
+    while(<TM>) {
+	if(/^RMSD/)    {
+	    my @t=split(/\s+/);
+	    $data{'rmsd'}=$t[5];
+	}
+	if(/^TM-score/)    {
+	    my @t=split(/\s+/);
+	    $data{'TM'}=$t[2];
+	}
+	if(/^MaxSub-score/)    {
+	    my @t=split(/\s+/);
+	    $data{'MX'}=$t[1];
+	}
+	if(/^GDT-TS/)    {
+	    my @t=split(/\s+/);
+	    $data{'GDT'}=$t[1];
+	}
+	if(/^GDT-HA/)    {
+	    my @t=split(/\s+/);
+	    $data{'GDT_HA'}=$t[1];
+	}
+	if(/^Length=\s+(\d+)/)    {
+	    $data{'GDT_HA'}=$1;
+	}
+	
+    }
+    close(TM);
+    return(%data);
+
+}
 sub aa321_resnumANY
 {
     my $file=shift;
@@ -2202,7 +2267,7 @@ sub aa321_resnumANY
 	    my $atomno=substr($_, 7, 4);
 	    my $atomtype=substr($_, 13, 3);
 	    my $resnum=substr($_,22,5);
-	    $resnum=~s/\s+//g;
+#	    $resnum=~s/\s+//g;
 	    #print "$resnum $old_resnum $atomtype\n";
 	    if($old_resnum ne $resnum)
 	    {
