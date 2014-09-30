@@ -80,7 +80,8 @@ $execdir/psipass2 $datadir/weights_p2.dat 1 1.0 1.0 psitmp.$$.ss2 psitmp.$$.ss
 cp psitmp.$$.ss2 $basename.ss2
 cp psitmp.$$.mtx $basename.mtx
 cp psitmp.$$.chk $basename.chk
-cp psitmp.$$.psi $basename.psi
+$dirname/../bin/check_psiblast_matrix.py psitmp.$$.psi psitmp.$$.fasta psitmp.$$.psi.corrected
+cp psitmp.$$.psi.corrected $basename.psi
 cp psitmp.$$.blastpgp $basename.fasta.blastpgp # this is for accpro will skip the psiblast runs
 # Remove temporary files
 #exit
