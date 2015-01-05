@@ -1,4 +1,5 @@
 #!/usr/bin/perl -w 
+use File::Temp qw/ tempfile /;
 
 sub align   # Takes two strings removes all dashes and returns the alignment. 
 {
