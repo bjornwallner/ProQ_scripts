@@ -2,7 +2,7 @@
 use Cwd 'abs_path';
 use File::Basename;
 my $rundir = dirname(abs_path($0));
-require "$rundir/bjornlib.pl";
+require "$rundir/needle.pl";
 
 
 
