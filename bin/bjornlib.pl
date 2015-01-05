@@ -199,7 +199,7 @@ sub parse_needle_output
     close(FILE);
     if(length($seq1) == 0) {
 
-	print STDERR "needle 2 from the EMBOSS package needs to be installed.\n";
+	print STDERR "needle from the EMBOSS package needs to be installed.\n";
     }
     return($seq1,$seq2);
 }
