@@ -1,6 +1,11 @@
 #!/usr/bin/perl -w 
-require 'bjornlib.pl';
-#OBS variable names should be changed 
+use Cwd 'abs_path';
+use File::Basename;
+my $rundir = dirname(abs_path($0));
+require "$rundir/bjornlib.pl";
+
+
+
 $subunits=1;
 $ss2=$ARGV[0];
 $seqfile_acc=$ARGV[1];
