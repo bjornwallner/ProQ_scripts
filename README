@@ -46,7 +46,7 @@ pdb
 bash$ bin/run_all_external.pl
 Usage: run_all_external.pl -pdb [pdbfile] -fasta [fastafile] -membrane 1 (if membrane protein) -overwrite 1 (if overwrite)
 
-For water solulable proteins run:
+For water soluable proteins run:
 bin/run_all_external.pl -pdb <pdbfile>
 OR 
 bin/run_all_external.pl -fasta <fastafile>
