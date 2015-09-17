@@ -2,7 +2,6 @@ PROQ SCRIPTS
 Contact: bjornw@ifm.liu.se
 git: https://github.com/bjornwallner/ProQ_scripts.git
 
-* For ProQM-resample see 2c) at the end of this document.
 
 ProQ is Model Quality Assessment Program that predictis the quality of
 individual models. To do this ProQ uses both information that can be
@@ -12,13 +11,10 @@ that comes from the sequence is the same for all models of the same
 sequence. Thus, before scoring models the sequence specific features
 needs to be calculated. The ProQ_scripts folder contains the scripts
 and programs needed to generate the sequence specific input features
-to the ProQ and ProQM scoring functions in Rosetta.
+to the ProQ2 and ProQM scoring functions in Rosetta.
 
 
-INSTALLATION of ProQ/ProQM scoring functions
-If you already have a version of Rosetta 3.5 installed follow the "B"
-instructions how to patch that version, otherwise follow the "A"
-instructions and the download the lastest weekly release of Rosetta.
+INSTALLATION of ProQ2/ProQM scoring functions
 
 1) Download the latest weekly release of Rosetta from
 https://www.rosettacommons.org/software/, you need a license but it's
@@ -29,7 +25,7 @@ free for academia.
 INSTALLATION of ProQ_scripts to calculate sequence specific features
 
 To install the programs to calculate all sequence specific features
-you need to do the following steps (the order does not matter)
+you need to do the following steps
 
 1) Set the $DB variable in bin/run_all_external.pl to a formated
 sequence database e.g.  uniref90. (e.g. download the fasta sequences
