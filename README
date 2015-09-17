@@ -10,31 +10,17 @@ calculated from the 3D coordinates of the model as well as information
 that can be predicted from the sequence. Of course the information
 that comes from the sequence is the same for all models of the same
 sequence. Thus, before scoring models the sequence specific features
-needs to be calculated. ProQ_scripts contain the scripts and programs
-needed to generate the sequence specific input features to the ProQ
-and ProQM scoring functions in Rosetta.
+needs to be calculated. The ProQ_scripts folder contains the scripts
+and programs needed to generate the sequence specific input features
+to the ProQ and ProQM scoring functions in Rosetta.
 
 
 INSTALLATION of ProQ/ProQM scoring functions
-If you already have a version of Rosetta 3.5 installed follow the "A"
-instructions how to patch that version, otherwise follow the "B"
+If you already have a version of Rosetta 3.5 installed follow the "B"
+instructions how to patch that version, otherwise follow the "A"
 instructions and the download the lastest weekly release of Rosetta.
 
-A) 
-PATCH ROSETTA 3.5 to include ProQ and ProQM scoring functions
-1) Download rosetta 3.5, from https://www.rosettacommons.org/software/
-   i.e rosetta3.5_source.tar and rosetta3.5_database.tar
-2) mkdir rosetta3.5
-3) cp rosetta3.5_source.tar and rosetta3.5_database.tar rosetta3.5/
-4) tar -xvf rosetta3.5_source.tar
-5) tar -xvf rosetta3.5_database.tar
-6) patch -p0 < ../ProQ_scripts/ProQ2_patch_rosetta3.5_with_test ,
-where ../ProQ_scripts/ProQ2_patch_rosetta3.5_with_test should be
-replaced with the actual location of the patch file.
-7) compile rosetta according to the instructions.
-
-B) 
-1) Download the latest weekly release (after week 36, 2013) from
+1) Download the latest weekly release of Rosetta from
 https://www.rosettacommons.org/software/, you need a license but it's
 free for academia.
 2) compile rosetta according to the instructions.
@@ -81,12 +67,24 @@ specific features. All features have the following naming: basename.*,
 e.g. basename.ss2 for secondary structure prediction or basename.mtx
 for psiblast profile etc.
 
-Currently there are no functionality to account for models that have
-missing residues. These have to be handled outside, for instance by
-creating the features for the full length sequence and pick out the
-features for the residues that do exist. This functionality might be 
-added later.
+Currently there are no functionality in Rosetta to account for models
+that have missing residues. These have to be handled outside, by first
+creating the sequence features for the full length sequence and than
+use the script 'copy_features_from_master.pl'. For the script to work
+you need to install the global alignment program 'needle' in the
+EMBOSS package (http://emboss.sourceforge.net/, or sudo apt-get
+install emboss)
 
+The following example will create all sequence specifici features for
+the full.seq sequence, and than copy the relevant features to the
+model1-5.pdb, by aligning the sequences of model1-5.pdb to full.seq.
+
+./run_all_external.pl -fasta full.seq
+./copy_features_from_master.pl model1.pdb full.seq
+./copy_features_from_master.pl model2.pdb full.seq
+./copy_features_from_master.pl model3.pdb full.seq
+./copy_features_from_master.pl model4.pdb full.seq
+./copy_features_from_master.pl model5.pdb full.seq
 
 RUNNING ProQ or ProQM on a pdb with the name 1abc.pdb
 
@@ -110,14 +108,27 @@ To get the local scores run the scoring with
 estimates with the name ProQM.<pdb>
 
  
-2b) Side-chain sampling before score (this is currently only benchmarked for ProQM)
+2b) Side-chain sampling before score 
+
+
+USING PROQ2 (NON-MEMBRANE)
 Generate 10 different side-chain conformations for each pdb:
-    relax.linuxgccrelease  -database <rosetta database> -in:file:fullatom -out:file:silent_struct_type binary -relax:membrane -membrane:Membed_init -score:weights membrane_highres.wts -in:file:spanfile $basename.span -nstruct 10 -relax_script <dir_ProQ_scripts>/resampling/repack.script -in:file:s *.pdb -out:file:silent ProQM.repacked.silent
+relax.linuxgccrelease  -database <rosetta database> -in:file:fullatom -out:file:silent_struct_type binary -nstruct 10 -relax_script <dir_ProQ_scripts>/resampling/repack.script -in:file:s *.pdb -out:file:silent ProQ2.repacked.silent
+
+Score each of these with ProQ2:
+score.linuxgccrelease -database <rosetta database> -in:file:fullatom -score:weights ProQ2 -in:file:silent ProQ2.repacked.silent -out:file:scorefile ProQ2.repacked.silent.score
+
+Select the model with the highest ProQ2 score.
+
+USING PROQM (MEMBRANE)
+Generate 10 different side-chain conformations for each pdb:
+relax.linuxgccrelease  -database <rosetta database> -in:file:fullatom -out:file:silent_struct_type binary -relax:membrane -membrane:Membed_init -score:weights membrane_highres.wts -in:file:spanfile $basename.span -nstruct 10 -relax_script <dir_ProQ_scripts>/resampling/repack.script -in:file:s *.pdb -out:file:silent ProQM.repacked.silent
 
 Score each of these with ProQM:
-    score.linuxgccrelease -database <rosetta database> -in:file:fullatom -ProQ:membrane -score:weights ProQM -in:file:silent ProQM.repacked.silent -out:file:scorefile ProQM.repacked.silent.score
+score.linuxgccrelease -database <rosetta database> -in:file:fullatom -ProQ:membrane -score:weights ProQM -in:file:silent ProQM.repacked.silent -out:file:scorefile ProQM.repacked.silent.score
 
 Select the model with the highest ProQM score.
+
 
 2c) ProQM-resample
 Follow the instruction above to install ProQ_scripts
