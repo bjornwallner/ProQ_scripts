@@ -16,10 +16,11 @@ to the ProQ2 and ProQM scoring functions in Rosetta.
 
 INSTALLATION of ProQ2/ProQM scoring functions
 
-1) Download the latest weekly release of Rosetta from
+1) git clone https://github.com/bjornwallner/ProQ_scripts
+2) Download the latest weekly release of Rosetta from
 https://www.rosettacommons.org/software/, you need a license but it's
 free for academia.
-2) compile rosetta according to the instructions.
+3) compile rosetta according to the instructions.
 
 
 INSTALLATION of ProQ_scripts to calculate sequence specific features
