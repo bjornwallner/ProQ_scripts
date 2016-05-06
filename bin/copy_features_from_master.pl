@@ -7,18 +7,26 @@ if(scalar(@ARGV)==0) {
     
     print "\nThis script will copy sequence based features calculated for the full length sequence\n";
     print "USAGE:\n";
-    print "\tcopy_features_from_master.pl <pdbfile> <basename-template>\n\n";
+    print "\tcopy_features_from_master.pl <pdbfile/silent> <basename-template>\n\n";
     exit;
 }
+my $subunits="";;
+
 my $pdb=$ARGV[0];
 my $basename=$ARGV[1];
+$subunits=$ARGV[2] if(defined($ARGV[2]));
 my $fasta="$pdb.fasta";
-my $seq=`$INSTALL_DIR/aa321CA.pl $pdb`;
+my $seq=`head $pdb|grep ^SEQUENCE|awk '{print \$2}'`;
+if(length($seq)==0) { # assume file is a pdb...
+    print STDERR "Assuming file is a pdb\n";
+    $seq=`$INSTALL_DIR/aa321CA.pl $pdb`;
+}
+
 open(OUT,">$fasta");
 print OUT ">$pdb\n$seq\n";
 close(OUT);
 
-`$INSTALL_DIR/acc_subset.pl $basename.acc $basename.fasta $fasta $pdb.acc`;
+`$INSTALL_DIR/acc_subset.pl $basename.acc $basename.fasta $fasta $pdb.acc $subunits`;
 if(-e "$basename.mpSA") {
 #    print "$INSTALL_DIR/mpSA_subset.pl $basename.mpSA $fasta $pdb.mpSA\n";
     #next;
@@ -39,9 +47,9 @@ if(-e "$basename.topcons.fa") {
     print SPAN $span;
     close(SPAN);
 }
-`$INSTALL_DIR/profile_subset.pl $basename.psi $fasta $pdb.psi`;
-`$INSTALL_DIR/profile_subset.pl $basename.mtx $fasta $pdb.mtx`;
-`$INSTALL_DIR/ss2_subset.pl $basename.ss2 $fasta $pdb.ss2`;
+`$INSTALL_DIR/profile_subset.pl $basename.psi $fasta $pdb.psi $subunits`;
+`$INSTALL_DIR/profile_subset.pl $basename.mtx $fasta $pdb.mtx $subunits`;
+`$INSTALL_DIR/ss2_subset.pl $basename.ss2 $fasta $pdb.ss2 $subunits`;
 
 
 sub parse_topcons
