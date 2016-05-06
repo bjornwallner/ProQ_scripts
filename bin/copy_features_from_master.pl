@@ -7,7 +7,7 @@ if(scalar(@ARGV)==0) {
     
     print "\nThis script will copy sequence based features calculated for the full length sequence\n";
     print "USAGE:\n";
-    print "\tcopy_features_from_master.pl <pdbfile/silent> <basename-template>\n\n";
+    print "\tcopy_features_from_master.pl <pdbfile/silent> <basename-template> <subunits optional>\n\n";
     exit;
 }
 my $subunits="";;
