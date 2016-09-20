@@ -5,4 +5,4 @@ then
 	exit 1
 fi
 #assumption: alignment_file = align_dir + name
-/nfs/bjornw/Research/git/ProQ_scripts/apps/sspro4/script/predict_seq_ss.pl /nfs/bjornw/Research/git/ProQ_scripts/apps/sspro4/server/predict_seq_ss.sh $1 $2 $3 
+/proj/wallner/users/x_bjowa/github/ProQ_scripts/apps/sspro4/script/predict_seq_ss.pl /proj/wallner/users/x_bjowa/github/ProQ_scripts/apps/sspro4/server/predict_seq_ss.sh $1 $2 $3 

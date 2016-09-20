@@ -17,7 +17,7 @@ echo $basename
 #exit
 # The name of the BLAST data bank
 dbname=$2 # /local/www/services/ProQ2/DB/uniref90.fasta
-
+cpu=$3
 # Where the NCBI programs have been installed
 ncbidir=$dirname/../apps/blast-2.2.18_x86_64/bin/
 if [ ! -f ".ncbirc" ] 
@@ -54,9 +54,9 @@ echo cp -f $1 psitmp.$$.fasta
 cp -f $1 psitmp.$$.fasta
 
 echo "Running PSI-BLAST with sequence" $1 "..."
-echo $ncbidir/blastpgp -a 8 -j 3 -h 0.001 -d $dbname -F F -i psitmp.$$.fasta -C psitmp.$$.chk -Q psitmp.$$.psi
+echo $ncbidir/blastpgp -a $cpu -j 3 -h 0.001 -d $dbname -F F -i psitmp.$$.fasta -C psitmp.$$.chk -Q psitmp.$$.psi
 #cpu=`grep -c CPU /proc/cpuinfo`;
-$ncbidir/blastpgp -a 8 -j 3 -h 0.001 -d $dbname -F F -i psitmp.$$.fasta -C psitmp.$$.chk -o psitmp.$$.blastpgp -Q psitmp.$$.psi > /dev/null #& $rootname.blast
+$ncbidir/blastpgp -a $cpu -j 3 -h 0.001 -d $dbname -F F -i psitmp.$$.fasta -C psitmp.$$.chk -o psitmp.$$.blastpgp -Q psitmp.$$.psi > /dev/null #& $rootname.blast
 
 
 echo "Running Makemat..."

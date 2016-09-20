@@ -25,7 +25,9 @@ eval {
 };
 
 
-my $DB="/home/bjornw/Research/DB/casp11/uniref90.fasta";
+my $DB="/proj/wallner/users/x_bjowa/DB/uniref90.fasta";
+
+
 
 if(scalar(@ARGV) % 2 != 0) {
     print STDERR "Usage: run_all_external.pl -pdb [pdbfile] -fasta [fastafile] -membrane 1 (if membrane protein) -overwrite 1 (if overwrite)\n";
@@ -56,6 +58,12 @@ if(defined($param{-pdb}))
 if(defined($param{-db}))
 {
     $DB=$param{-db};
+}
+
+my $cpu=8
+if(defined($param{-cpu}))
+{
+    $cpu=$param{-cpu};
 }
 #my $use_master=0;
 #if(defined($param{-subsetof}))
@@ -115,9 +123,9 @@ if(!-e $profile_file) {
 #	    
  #   } else {
 
-    print "$INSTALL_DIR/bin/create_profile.sh $fasta $DB\n";
+    print "$INSTALL_DIR/bin/create_profile.sh $fasta $DB $cpu\n";
 #    exit;
-    system("$INSTALL_DIR/bin/create_profile.sh $fasta $DB 8 3");
+    system("$INSTALL_DIR/bin/create_profile.sh $fasta $DB $cpu");
   #  }
 }
 
