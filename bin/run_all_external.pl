@@ -60,7 +60,7 @@ if(defined($param{-db}))
     $DB=$param{-db};
 }
 
-my $cpu=8
+my $cpu=8;
 if(defined($param{-cpu}))
 {
     $cpu=$param{-cpu};
